@@ -7,3 +7,13 @@ MY_valid_x.csv
 MY_train_x.csv
 df_for_modelling.csv
 __pycache__
+training_data_pycaret.csv
+lgbm_my_hyperparsmodel.pickle
+lgbm_my_hyperparsmodel.sav
+model_lgbm_my_hypers_my_scorer.pickle
+model_lgbm_my_hypers_my_scorer.sav
+model_lgbm_my_hypers.pickle
+model_lgbm_my_hypers.sav
+prepoc_pycaret_smote.sav
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
