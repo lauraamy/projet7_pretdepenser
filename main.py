@@ -13,7 +13,7 @@ app = FastAPI()
 def get_root():
     return {'message': 'Welcome to Credit Home Prediction'}
 
-model = joblib.load('model_lgbm.sav')
+model = joblib.load('lgbm__trained_my_hypers_my_scorer1.sav')
 
 # Define predict function
 @app.post('/predict')
