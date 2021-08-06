@@ -11,4 +11,4 @@ st.sidebar.title("Share Price analysis for May 2019 to May 2020:")
 st.markdown("This application is a Share Price dashboard for Top 5 Gainers and Losers:")
 st.sidebar.markdown("This application is a Share Price dashboard for Top 5 Gainers and Losers:")
 
-streamlit run share_new.py
+#streamlit run share_new.py
