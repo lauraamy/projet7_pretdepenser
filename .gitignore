@@ -1,13 +1,6 @@
 Projet+Mise+en+prod+-+home-credit-default-risk
-lgbm_importances01.png
-MY_df_for_pycaret.csv
 logs.log
-MY_valid_y.csv
-MY_valid_x.csv
-MY_train_x.csv
-df_for_modelling.csv
 __pycache__
-training_data_pycaret.csv
 hyperpar_search_output_lgbmmodel.pickle
 hyperpar_search_output_lgbmmodel.sav
 lgbm__trained_my_hypers_my_scorer1.sav
@@ -21,3 +14,4 @@ model_lgbm_my_hypers.sav
 prepoc_pycaret_smote.sav
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+JupyterLab.webarchive
