@@ -10,14 +10,8 @@ __pycache__
 training_data_pycaret.csv
 hyperpar_search_output_lgbmmodel.pickle
 hyperpar_search_output_lgbmmodel.sav
-lgbm__trained_my_hypers_my_scorer1.sav
-lgbm_trained_my_hypers_my_scorer1.pickle
-lgbm_my_hyperparsmodel.pickle
-lgbm_my_hyperparsmodel.sav
-model_lgbm_my_hypers_my_scorer.pickle
-model_lgbm_my_hypers_my_scorer.sav
-model_lgbm_my_hypers.pickle
 model_lgbm_my_hypers.sav
 prepoc_pycaret_smote.sav
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
+JupyterLab.webarchive
