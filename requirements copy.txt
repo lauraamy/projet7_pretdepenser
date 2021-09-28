@@ -1,6 +1,7 @@
-altair==4.1.0
-anyio==2.2.0
-appnope==0.1.2
+abseil-cpp==20210324.2==h23ab428_0
+altair==4.1.0==py_1
+anyio==2.2.0==py39hecd8cb5_1
+appnope==0.1.2==py39hecd8cb5_1001
 argh==0.26.2==py39hecd8cb5_0
 argon2-cffi==20.1.0==py39h9ed2024_1
 arrow-cpp==5.0.0==py39h7fc7d4f_8_cpu
