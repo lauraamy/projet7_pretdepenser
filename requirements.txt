@@ -3,7 +3,6 @@ anyio==2.2.0
 appnope==0.1.2
 argh==0.26.2
 argon2-cffi==20.1.0
-arrow-cpp==5.0.0
 asgiref==3.4.1
 astor==0.8.1
 cloudpickle==2.0.0
