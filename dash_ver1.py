@@ -95,7 +95,6 @@ if __name__ == "__main__":
         #st.markdown(
         #    """
         #    MArkdown Text
-#
         #    """
         #)
     
@@ -142,20 +141,24 @@ if __name__ == "__main__":
 
     elif mode == "Client Credit Info":
         
-        df = df1.copy()
-
-        st.title(" Title Text Client Credit Info")
+        df_mode2 = df1.copy()
 
         #st.write(prob0_txt + " : ", prob0_flt)
 
         st.sidebar.subheader("Please Type in the Credit ID :")
 
+        # API information
+        server_url = 'http://127.0.0.1:8000'
+        endpoint = '/credit_decision/'
+
         # Creating parameters
         params = {
-            'Credit ID':st.sidebar.slider('Credit ID', df['SK_ID_CURR'].min(), df['SK_ID_CURR'].max(), step = 1)
+            'Credit ID':st.sidebar.slider('Credit ID', df_mode2['SK_ID_CURR'].min(), df_mode2['SK_ID_CURR'].max(), step = 1)
         }
 
         user_input = st.sidebar.text_input("Client Credit ID", '100002')   
+
+        st.title(" Title Text Client Credit Info")
 
 
     elif mode == "Client Loan Decision":
@@ -168,11 +171,16 @@ if __name__ == "__main__":
         server_url = 'http://127.0.0.1:8000'
         endpoint = '/credit_decision/'
 
-        df = df1.copy()
+        df_mode3 = df1.copy()
+
+        st.write(df_mode3['SK_ID_CURR'].min())
+
+        df_mode3['SK_ID_CURR'].min()
+        df_mode3['SK_ID_CURR'].max()
 
         # Creating parameters
         params = {
-            'Credit ID':st.sidebar.slider('Credit ID', df['SK_ID_CURR'].min(), df['SK_ID_CURR'].max(), step = 1)
+            'Credit ID':st.sidebar.slider('Credit ID', df_mode3['SK_ID_CURR'].min(), df_mode3['SK_ID_CURR'].max(), step = 1)
         }
 
         user_input = st.sidebar.text_input("Client Credit ID", '100002')   
@@ -184,6 +192,10 @@ if __name__ == "__main__":
         
         st.subheader("Client Prediction :  ")
         st.markdown("These are the probabilities and final prediction for the requested client based on our models : ")
+
+        #train_df = pd.read_csv('../my_csv_files/MY_train_x.csv')
+        df_selec_plus = pd.read_csv('../my_csv_files/df_selec_plus_sk_id.csv')
+        clf = joblib.load('../Models/lgbm_trained_myscore_final.pickle')
 
         if st.sidebar.button("Predict"):   
             #result = process(df, server_url+endpoint+user_input)  
@@ -215,23 +227,28 @@ if __name__ == "__main__":
         else:  
             pass 
 
-        train_df = pd.read_csv('../my_csv_files/MY_train_x.csv')
-        clf = joblib.load('../Models/lgbm_trained_my_score03.pickle')
+
+        index_point = df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)].reset_index()
+        index_p = index_point["index"]
+
+        shap_data_plot  = df_selec_plus.copy().drop(["SK_ID_CURR", 'Unnamed: 0'],  axis = 1)
 
         explainer = shap.TreeExplainer(clf)
 
-        #shap_values = explainer.shap_values(train_df)
+        shap_values = explainer.shap_values(shap_data_plot)
 
-        #shap.force_plot(explainer.expected_value[1], shap_values[1][950,:], train_df.iloc[950,:])
+        def st_shap(plot, height = None):
+                shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+                components.html(shap_html, height = height)
+        
+        st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1][index_p,:], shap_data_plot.iloc[index_p,:]))
 
-        #shap.force_plot(expected_value, shap_values[idx,:], features = X.iloc[idx,4:], 
-        #link='logit', matplotlib=True, figsize=(12,3))
-        #st.pyplot(bbox_inches='tight',dpi=300,pad_inches=0)
-        #plt.clf()
+        # visualize the first prediction's explanation (use matplotlib=True to avoid Javascript)
+        #st_shap(shap.force_plot(explainer.expected_value, shap_values[0,:], shap_data.iloc[0,:]))
+        #shap.force_plot(explainer.expected_value[1], shap_values[1][950,:], shap_data.iloc[950,:])
+       
 
     
-
-   
 
 
 #streamlit run share_new.py / dash_ver1.py
