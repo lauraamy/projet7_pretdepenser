@@ -60,7 +60,6 @@ h11==0.12.0==pyhd3eb1b0_0
 hyperopt==0.2.5==pyh9f0ad1d_0
 idna==3.2==pyhd3eb1b0_0
 importlib-metadata==4.8.1==py39hecd8cb5_0
-importlib_metadata==4.8.1==hd3eb1b0_0
 ipykernel==6.2.0==py39hecd8cb5_1
 ipython==7.27.0==py39h01d92e1_0
 ipython_genutils==0.2.0==pyhd3eb1b0_1
