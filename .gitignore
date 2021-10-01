@@ -8,3 +8,5 @@ prepoc_pycaret_smote.sav
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 JupyterLab.webarchive
+.DS_Store
+

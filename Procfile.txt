@@ -1,1 +1,0 @@
-web: sh setup.sh && streamlit run dash_ver1.py
