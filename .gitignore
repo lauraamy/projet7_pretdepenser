@@ -8,8 +8,5 @@ prepoc_pycaret_smote.sav
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 JupyterLab.webarchive
-<<<<<<< HEAD
-=======
-df_for_modelling.csv
 .DS_Store
->>>>>>> ff625a5 (Changing commit history)
+

@@ -4,19 +4,19 @@ import re
 import pandas as pd
 import numpy as np
 from fastapi import FastAPI
-import lightgbm as lgb
-import sklearn
+#import lightgbm as lgb
+#import sklearn
 
 app = FastAPI()
 
-model = joblib.load('../Models/lgbm__trained_my_hypers_my_scorer1.sav')
+model = joblib.load('lgbm_trained_myscore_final.pickle')
 
 # Define predict function
 # @app.post('/predict')
 def predict(credit_id):
     # data = pd.read_csv("MY_train_x.csv")
     # read the df obtained from merging the csv files and keeping the rows where TARGET is a missing value
-    main_model_df = pd.read_csv('../my_csv_files/df_for_modelling.csv')
+    main_model_df = pd.read_csv('df_for_api.csv')
     main_model_df = main_model_df.rename(columns = lambda x:re.sub('[^A-Za-z0-9_]+', '', x))
     # credit_id between : 100002 - 456250
     row_of_interest = main_model_df[main_model_df['SK_ID_CURR'] == credit_id]
