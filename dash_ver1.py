@@ -51,7 +51,9 @@ if __name__ == "__main__":
         st.title("Prêt à Dépenser Dashboard Pages")
         # Sidebar creation ####################################################################
         #st.sidebar.title('Prêt à Dépenser Dashboard Pages')
-        st.sidebar.markdown("Please Select One of the Following Pages: ")
+        st.sidebar.header(" ")
+
+        st.sidebar.markdown("Please select one of the following pages: ")
 
         #cols = ["EXT_SOURCE_2", "DAYS_EMPLOYED", "PAYMENT_RATE", "PREV_CNT_PAYMENT_MEAN", "ANNUITY_INCOME_PERC"]
         #st_ms = st.multiselect("Choose columns", main_model_df.columns.tolist(), default = cols)
@@ -79,6 +81,8 @@ if __name__ == "__main__":
 
         df_modl = data_small_smple.copy()
 
+        st.header(" ")
+
         st.subheader("Overall Stats : ")
         st.write("Present Number of Loans : ", df_modl.iloc[:,2:].shape[0])
         st.write("Present Number of Features Available to Explore : ", df_modl.iloc[:,2:].shape[1])
@@ -96,61 +100,67 @@ if __name__ == "__main__":
         fig = px.pie(data_initial, names = 'NAME_CONTRACT_TYPE', title='Contract Types (in Percentage of Clients)')
         st.plotly_chart(fig, use_container_width=True)
 
+        st.subheader("Exploration of our Client Data & Information : ")
+
         fig = px.pie(data_initial, names = 'NAME_INCOME_TYPE', title='Clients Income Type (in Percentage of Clients)')
         st.plotly_chart(fig, use_container_width=True)
 
 
-        st.subheader("Exploration of our Client Data & Information : ")
         df = data_small_smple.copy().drop(['Unnamed: 0', 'index'],  axis = 1)
 
         feature = st.selectbox(
-            "Choose a feature : ", list(df.columns))
+            "Please choose a feature : ", list(df.columns))
             #['SK_ID_CURR', 'TARGET', 'CODE_GENDER']
 
-        fig = px.histogram(
+        if not feature:
+            st.error("Please select one feature.")
+        else :
+            if df[feature].value_counts().shape[0] < 4:
+                fig = px.pie(
+                data_frame=df,
+                names = feature,
+                title="Pie Chart of the selected feature : ",
+                )
+                #plot = plotly_plot(chart_type, df)
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                fig = px.histogram(
                 data_frame=df,
                 x = feature,
                 title="Histogram of the selected feature : ",
-            )
-            #plot = plotly_plot(chart_type, df)
-        st.plotly_chart(fig, use_container_width=True)
-        
-        if not feature:
-            st.error("Please select one feature.")
-        else:
-            #data = df.loc[features]
-            #st.write(type(feature))
+                )
+                #plot = plotly_plot(chart_type, df)
+                st.plotly_chart(fig, use_container_width=True)
+                #data = df.loc[features]
+                #st.write(type(feature))
+                fig = px.line(
+                    data_frame = df,
+                    x= 'SK_ID_CURR', y = feature,
+                    title = "Selected feature vs the client's credit ID : ",
+                )
+                #plot = plotly_plot(chart_type, df)
+                st.plotly_chart(fig, use_container_width=True)
 
-            fig = px.line(
-                data_frame = df,
-                x= 'SK_ID_CURR', y = feature,
-                title = "Selected feature vs the client's credit ID : ",
-            )
-            #plot = plotly_plot(chart_type, df)
-            st.plotly_chart(fig, use_container_width=True)
-
-            st.write("Selected features with associated loan IDs, sorted by the first selected feature, in descending order : ")
+            st.markdown("Selected features with associated loan IDs, sorted by the first selected feature, in descending order : ")
 
             #st.dataframe(df[["SK_ID_CURR", str(feature)]].sort_values(by = feature, ascending = False).reset_index(drop = True))
             # .style.hide_index()
 
             features2 = st.multiselect(
-            "Choose a feature : ", list(df.columns), ["SK_ID_CURR", 'EXT_SOURCE_2', 'EXT_SOURCE_3', 
-            'DAYS_EMPLOYED_PERC', 'DAYS_EMPLOYED',
-            'AMT_ANNUITY', 'AMT_CREDIT',
-            'INSTAL_DPD_MEAN'])
+            "Please choose a feature : ", list(df.columns), ["SK_ID_CURR", 'INSTAL_DPD_MEAN',
+            'AMT_ANNUITY', 'AMT_CREDIT'])
             #st.write((features2))
             st.dataframe(df.loc[:, features2].sort_values(by = feature, ascending = False).reset_index(drop = True))
         
-        #df["DAYS_BIRTH_YEAR"] = -(df["DAYS_BIRTH"] / 365)
-        #
-        #fig = px.histogram(
-        #        data_frame=df,
-        #        x="DAYS_BIRTH_YEAR",
-        #        title="Client's age in years at the time of application : ",
-        #    )
-        ##plot = plotly_plot(chart_type, df)
-        #st.plotly_chart(fig, use_container_width=True)
+            #df["DAYS_BIRTH_YEAR"] = -(df["DAYS_BIRTH"] / 365)
+            #
+            #fig = px.histogram(
+            #        data_frame=df,
+            #        x="DAYS_BIRTH_YEAR",
+            #        title="Client's age in years at the time of application : ",
+            #    )
+            ##plot = plotly_plot(chart_type, df)
+            #st.plotly_chart(fig, use_container_width=True)
         
 
 
@@ -158,14 +168,16 @@ if __name__ == "__main__":
 
         #st.write(prob0_txt + " : ", prob0_flt)
 
-        st.subheader("Please Type in the Credit ID and press Enter : ")
+        st.header(" ")
+
+        st.write("Please type in the Credit ID and press Enter : ")
 
         # API information
         server_url = 'http://127.0.0.1:8000'
         #server_url = 'https://mighty-tundra-05371.herokuapp.com'
         endpoint = '/credit_decision/'
 
-        df_mode2 = data_small_smple.copy()
+        df_mode2 = data_small_smple.copy().drop(['Unnamed: 0', 'index'],  axis = 1)
         min_v = int(df_mode2['SK_ID_CURR'].min())
         max_v = int(df_mode2['SK_ID_CURR'].max())
 
@@ -178,7 +190,7 @@ if __name__ == "__main__":
         #user_input = st.sidebar.selectbox(
             #"Choose which feature shall be used to order the data : ", features_for_s_client)   
 
-        user_input = st.text_input("Client Credit ID", '400001')   
+        user_input = st.text_input("Client's Credit ID : ", '400001')   
 
         #st.title(" Title Text Client Credit Info")
 
@@ -192,26 +204,50 @@ if __name__ == "__main__":
         #"Choose which feature shall be used to order the data : ", features_for_s_client)
         #['SK_ID_CURR', 'TARGET', 'CODE_GENDER']
 
-        features_for_s_client = st.multiselect("Choose the features you wish to see : ", list(df_mode2.columns), 
-        ["SK_ID_CURR", 'EXT_SOURCE_2', 'EXT_SOURCE_3', 
-            'DAYS_EMPLOYED_PERC', 'DAYS_EMPLOYED',
-            'AMT_ANNUITY', 'AMT_CREDIT',
+        st.header("  ")
+
+        st.write("Credit amount of client's loan : ", 
+        df_mode2.AMT_CREDIT[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.write("Annuity (monthly installment payment) that client will send us (interest rate included) : ",
+        df_mode2.AMT_ANNUITY[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.write("Rate at which client's credit is paid each month : ",
+        df_mode2.PAYMENT_RATE[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.write("Client's average number of drawings at ATM during this month on a previous credit: ", 
+        df_mode2.CC_CNT_DRAWINGS_ATM_CURRENT_MEAN[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.write("Sum of what client actually paid on installments of previous credits : ", 
+        df_mode2.INSTAL_AMT_PAYMENT_SUM[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.write("Client's average days past due for instalments of previous credits : ", 
+        df_mode2.INSTAL_DPD_MEAN[df_mode2["SK_ID_CURR"] == int(user_input)].values[0])
+
+        st.header("  ")
+
+        features_for_s_client = st.multiselect("Choose the features you wish to explore : ", list(df_mode2.columns), 
+        ["SK_ID_CURR", 'AMT_ANNUITY', 'AMT_CREDIT',
             'INSTAL_DPD_MEAN'])
+
         if not features_for_s_client :
             st.error("Please select one feature.")
         else:
             index_needed = df_mode2.index[df_mode2["SK_ID_CURR"] == int(user_input)].values[0]
             st.dataframe(df_mode2.loc[(index_needed-5):(index_needed+5), features_for_s_client].reset_index(drop = True))
 
+            st.header("  ")
+
             feature_line = st.selectbox(
-            "Choose a specific feature : ", list(df_mode2.columns))
+            "Please choose a specific feature : ", list(df_mode2.columns))
             #['SK_ID_CURR', 'TARGET', 'CODE_GENDER']
 
-            fig = px.line(
+            fig = px.box(
                 data_frame = df_mode2,
-                x= 'SK_ID_CURR', y = feature_line,
-                title = "Selected feature vs the client's credit ID : ",
+                y = feature_line,
+                title = "Boxplot of selected feature with line denoting the value for current client : ",
             )
+            # x= 'SK_ID_CURR', 
 
             val_hline = list(df_mode2[df_mode2["SK_ID_CURR"] == int(user_input)][feature_line])
             #st.write(val_hline)
@@ -234,6 +270,8 @@ if __name__ == "__main__":
 
     elif mode == "Client Loan Decision":
         
+        st.header(" ")
+
         st.subheader("Client Loan Decision : ")
 
         #st.title("Client Loan Decision")
@@ -267,7 +305,7 @@ if __name__ == "__main__":
 
         #train_df = pd.read_csv('../my_csv_files/MY_train_x.csv')
         #df_selec_plus = pd.read_csv('../my_csv_files/df_selec_plus_sk_id.csv')
-        clf = joblib.load('../Models/lgbm_trained_myscore_final.pickle')
+        clf = joblib.load('../Models/lgbmhyperpar_mythresh_0_5.pickle')
 
         if st.sidebar.button("Predict"):   
             #result = process(df, server_url+endpoint+user_input)  
@@ -308,6 +346,8 @@ if __name__ == "__main__":
 
             shap_values = explainer.shap_values(shap_data_plot)
 
+            st.header(" ")
+
             st.subheader("SHAP Plot : ")
 
             def st_shap(plot, height = None):
@@ -332,36 +372,40 @@ if __name__ == "__main__":
 
             most_important_features = list(feature_importance["col_name"].head(5))
 
+            st.subheader(" ")
+            st.subheader(" ")
+
             st.subheader("Graphs of important features for the current client : ")
 
             df = shap_data_plot
             # Here we use a column with categorical data
             #fig = px.histogram(df, x = "AMT_CREDIT")
-            fig = px.histogram(df, x = most_important_features[0], nbins = 40)
+            fig = px.box(df, y = most_important_features[0])
+            #, nbins = 40)
             val_hline = list(df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)][most_important_features[0]])
             #st.write(val_hline)
             #st.write(val_hline[0])
-            fig.add_vline(x = val_hline[0])
+            fig.add_hline(y = val_hline[0])
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = px.histogram(df, x = most_important_features[1], nbins = 40)
+            fig = px.box(df, y = most_important_features[1])
             val_hline = list(df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)][most_important_features[1]])
-            fig.add_vline(x = val_hline[0])
+            fig.add_hline(y = val_hline[0])
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = px.histogram(df, x = most_important_features[2], nbins = 40)
+            fig = px.box(df, y = most_important_features[2])
             val_hline = list(df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)][most_important_features[2]])
-            fig.add_vline(x = val_hline[0])
+            fig.add_hline(y = val_hline[0])
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = px.histogram(df, x = most_important_features[3], nbins = 40)
+            fig = px.box(df, y = most_important_features[3])
             val_hline = list(df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)][most_important_features[3]])
-            fig.add_vline(x = val_hline[0])
+            fig.add_hline(y = val_hline[0])
             st.plotly_chart(fig, use_container_width=True)
 
-            fig = px.histogram(df, x = most_important_features[4], nbins = 40)
+            fig = px.box(df, y = most_important_features[4])
             val_hline = list(df_selec_plus[df_selec_plus["SK_ID_CURR"] == int(user_input)][most_important_features[4]])
-            fig.add_vline(x = val_hline[0])
+            fig.add_hline(y = val_hline[0])
             st.plotly_chart(fig, use_container_width=True)
 
             st.subheader("SHAP Summary Plot of the Prediction Model Used : ")
@@ -380,9 +424,5 @@ if __name__ == "__main__":
             pass 
 
         
-       
-
-    
-
 
 #streamlit run share_new.py / dash_ver1.py

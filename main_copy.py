@@ -9,7 +9,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-model = joblib.load('../Models/lgbm_trained_myscore_final.pickle')
+model = joblib.load('../Models/lgbmhyperpar_mythresh_0_5.pickle')
 
 # Define predict function
 # @app.post('/predict')
