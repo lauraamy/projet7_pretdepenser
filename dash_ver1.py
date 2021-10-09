@@ -25,7 +25,7 @@ st.set_page_config(
 # be trained here
 @st.cache
 def load_data_small_sample():
-    data_initial = pd.read_csv('../my_csv_files/df_small_sample_db.csv')
+    data_initial = pd.read_csv('df_small_sample_db.csv')
     #df_app = data_initial_plt.append(data_initial_plt2)
     # #return df_app
     return data_initial
@@ -34,7 +34,7 @@ data_small_smple = load_data_small_sample()
 
 @st.cache
 def load_data_train():
-    data_initial = pd.read_csv('../my_csv_files/train_csv_db.csv')
+    data_initial = pd.read_csv('train_csv_db.csv')
     #data_initial_plt2 = pd.read_csv('../Projet+Mise+en+prod+-+home-credit-default-risk/application_test.csv')
     #df_app = data_initial_plt.append(data_initial_plt2)
     # #return df_app
@@ -173,8 +173,8 @@ if __name__ == "__main__":
         st.write("Please type in the Credit ID and press Enter : ")
 
         # API information
-        server_url = 'http://127.0.0.1:8000'
-        #server_url = 'https://mighty-tundra-05371.herokuapp.com'
+        #server_url = 'http://127.0.0.1:8000'
+        server_url = 'https://mighty-tundra-05371.herokuapp.com'
         endpoint = '/credit_decision/'
 
         df_mode2 = data_small_smple.copy().drop(['Unnamed: 0', 'index'],  axis = 1)
@@ -280,8 +280,8 @@ if __name__ == "__main__":
         st.sidebar.subheader("Please Type in the Credit ID : ")
 
         # API information
-        server_url = 'http://127.0.0.1:8000'
-        #server_url = 'https://mighty-tundra-05371.herokuapp.com'
+        #server_url = 'http://127.0.0.1:8000'
+        server_url = 'https://mighty-tundra-05371.herokuapp.com'
         endpoint = '/credit_decision/'
 
         df_mode3 = data_small_smple.copy()
@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
         #train_df = pd.read_csv('../my_csv_files/MY_train_x.csv')
         #df_selec_plus = pd.read_csv('../my_csv_files/df_selec_plus_sk_id.csv')
-        clf = joblib.load('../Models/lgbmhyperpar_mythresh_0_5.pickle')
+        clf = joblib.load('lgbmhyperpar_mythresh_0_5.pickle')
 
         if st.sidebar.button("Predict"):   
             #result = process(df, server_url+endpoint+user_input)  
