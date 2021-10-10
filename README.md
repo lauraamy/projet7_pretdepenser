@@ -28,3 +28,6 @@ Files to run the dashboard :
 df_small_sample_db.csv
 train_csv_db.csv
 
+Code for Dashboard : 
+dash_ver1.py
+
