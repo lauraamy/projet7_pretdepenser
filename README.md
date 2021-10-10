@@ -16,7 +16,9 @@ The exploratory data analysis for this project was inspired by the following Kag
 
 Exploration and modelling notebooks : 
 p7_notebook_exploration.ipynb
+
 p7_notebook_modelling.ipynb
+
 p7_notebook_pycaret.ipynb
 
 Model for API : 
@@ -26,6 +28,7 @@ Code for APi : main_copy.py
 
 Files to run the dashboard : 
 df_small_sample_db.csv
+
 train_csv_db.csv
 
 Code for Dashboard : 
