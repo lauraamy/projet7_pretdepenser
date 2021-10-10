@@ -316,6 +316,9 @@ if __name__ == "__main__":
             #result.content
 
             list_result = result.text.split('","')
+
+            st.write(list_result)
+            
             prob0 = list_result[0].split('":"')
             prob1 = list_result[1].split('":"')
             prob2 = list_result[2].split('":"')
