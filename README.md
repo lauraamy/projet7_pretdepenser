@@ -12,4 +12,19 @@ The data used for this project is the data made available by the “Home Credit 
 
 The exploratory data analysis for this project was inspired by the following Kaggle kernel: “LightGBM with Simple Features” created by Aguiar, as part of the competition. 
 
+# Files
+
+Exploration and modelling notebooks : 
+p7_notebook_exploration.ipynb
+p7_notebook_modelling.ipynb
+p7_notebook_pycaret.ipynb
+
+Model for API : 
+lgbmhyperpar_mythresh_0_5.pickle
+
+Code for APi : main_copy.py
+
+Files to run the dashboard : 
+df_small_sample_db.csv
+train_csv_db.csv
 
